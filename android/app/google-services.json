@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "192698496915",
+    "firebase_url": "https://purificador-5b112-default-rtdb.firebaseio.com",
+    "project_id": "purificador-5b112",
+    "storage_bucket": "purificador-5b112.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:192698496915:android:b7f082afbf30c9994e9a66",
+        "android_client_info": {
+          "package_name": "com.example.purifier"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC48LNJjoac7f_OyGo-5tqBS9NMKgC7RvU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:192698496915:android:e599c243983863a34e9a66",
+        "android_client_info": {
+          "package_name": "com.purifier.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC48LNJjoac7f_OyGo-5tqBS9NMKgC7RvU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

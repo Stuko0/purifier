@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:purifier/src/sample_feature/login_page.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -14,11 +15,45 @@ class HomePage extends StatefulWidget {
 class _HomePage extends State<HomePage> {
   bool isOn = false;
   List<dynamic> notifications = [];
+  final DatabaseReference _databaseReference = FirebaseDatabase.instance.ref();
+  late Stream<DatabaseEvent> _dataStreamEvents;
+  double co2Ppm = 0.0;
+  double coPpm = 0.0;
+  double airQuality=0.0;
 
   @override
   void initState() {
     super.initState();
     loadNotifications();
+    _databaseReference.child('data').orderByChild('timestamp').limitToLast(1).onValue.listen((DatabaseEvent event){
+      final data = event.snapshot.value as Map<dynamic, dynamic>;
+      final latestEntry = data.values.first;
+      setState(() {
+        co2Ppm = latestEntry['co2_ppm'];
+        print(co2Ppm);
+        coPpm = latestEntry['co_ppm'];
+        print(coPpm);
+        airQuality=calculateAirQualityPercentage(co2Ppm, coPpm);
+        print(airQuality);
+      });
+    });
+    _dataStreamEvents = _databaseReference.child('events').onValue;
+    _dataStreamEvents.listen((DatabaseEvent event){
+      final data = event.snapshot.value as Map<dynamic, dynamic>;
+      setState(() {
+        isOn = data['event']=='Extractor encendido';
+      });
+    });
+  }
+
+  double calculateAirQualityPercentage(double co2, double co) {
+    double totalPpm = co2 + co;
+    if (totalPpm >= 5000) {
+      return 0.0;
+    } else if (totalPpm < 4999) {
+      return (100 - ((totalPpm / 4499) * 100)).clamp(0.0, 100.0);
+    }
+    return 0.0;
   }
 
   Future<void> loadNotifications() async {
@@ -98,12 +133,13 @@ class _HomePage extends State<HomePage> {
                   children: [
                     Icon(
                       Icons.air_rounded,
-                      color: Color(0xffe9e9e8),
+                      color: airQuality >=61 ? Color(0xffa0d06b) :
+                             airQuality >=31 ? Color(0xfff7664a) : Color(0xffec4134),
                       size: screenWidth * 0.15,
                     ),
-                    const Text(
-                      "95%",
-                      style: TextStyle(fontSize: 20, color: Colors.black),
+                    Text(
+                      "${airQuality.toStringAsFixed(2)}%",
+                      style: const TextStyle(fontSize: 20, color: Colors.black),
                     ),
                     const Text(
                       "Air quality",
@@ -175,6 +211,7 @@ class _HomePage extends State<HomePage> {
                         onPressed: () {
                           setState(() {
                             isOn = !isOn;
+                            _databaseReference.child('events').update({'event':isOn ? 'Extractor encendido' :  'Extractor apagado'});
                           });
                         },
                       ),

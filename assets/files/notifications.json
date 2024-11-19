@@ -1,0 +1,47 @@
+[
+    {
+        "id": 1,
+        "title": "Inicio automático de purificación",
+        "description": "El purificador se encendió solo",
+        "origin": "automatico",
+        "start_time": "2024-11-18T08:00:00",
+        "end_time": "2024-11-18T08:30:00",
+        "purification_percentage": 75
+    },
+    {
+        "id": 2,
+        "title": "Inicio manual de purificación",
+        "description": "El usuario activó manualmente",
+        "origin": "manual",
+        "start_time": "2024-11-18T09:15:00",
+        "end_time": "2024-11-18T09:45:00",
+        "purification_percentage": 60
+    },
+    {
+        "id": 3,
+        "title": "Finalización de ciclo automático",
+        "description": "El ciclo terminó exitosamente",
+        "origin": "automatico",
+        "start_time": "2024-11-18T10:00:00",
+        "end_time": "2024-11-18T10:30:00",
+        "purification_percentage": 80
+    },
+    {
+        "id": 4,
+        "title": "Ciclo interrumpido manualmente",
+        "description": "El usuario detuvo el ciclo",
+        "origin": "manual",
+        "start_time": "2024-11-18T11:00:00",
+        "end_time": "2024-11-18T11:10:00",
+        "purification_percentage": 40
+    },
+    {
+        "id": 5,
+        "title": "Inicio por detección de polvo",
+        "description": "El sensor detectó partículas",
+        "origin": "automatico",
+        "start_time": "2024-11-18T12:00:00",
+        "end_time": "2024-11-18T12:20:00",
+        "purification_percentage": 85
+    }
+]
